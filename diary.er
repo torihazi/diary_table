@@ -1,0 +1,36 @@
+[users]
+  *id {label: "integer, not null"}
+  nick_name {label: "string(20), not null"}
+  email {label: "string(64), not null, uniq"}
+  created_at {label: "datetime, default CURRENT_TIMESTAMP, not null"}
+  updated_at {label: "datetime, default CURRENT_TIMESTAMP, not null"}
+
+[diaries]
+  *id {label: "integer, not null"}
+  user_id {label: "integer, not null, FK(users)"}
+  title {label: "string(30), not null"}
+  content {label: "text, not null"}
+  created_at {label: "datetime, default CURRENT_TIMESTAMP, not null"}
+  updated_at {label: "datetime, default CURRENT_TIMESTAMP, not null"}
+
+[tags]
+  *id {label: "integer, not null"}
+  name {label: "string(10), not null, uniq"}
+  created_at {label: "datetime, default CURRENT_TIMESTAMP, not null"}
+  updated_at {label: "datetime, default CURRENT_TIMESTAMP, not null"}
+
+[diary_tags]
+  *id {label: "integer, not null"}
+  diary_id {label: "integer, not null, FK(diaries)"}
+  tag_id {label: "integer, not null, FK(tags)"}
+  created_at {label: "datetime, default CURRENT_TIMESTAMP, not null"}
+  updated_at {label: "datetime, default CURRENT_TIMESTAMP, not null"}
+
+# Cardinality    Syntax
+# 0 or 1         ?
+# exactly 1      1
+# 0 or more      *
+# 1 or more      +
+users 1--* diaries
+diaries 1--* diary_tags
+tags 1--*diary_tags
